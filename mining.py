@@ -20,6 +20,15 @@ monthly_averages = []
 
 
 def read_stock_data(stock_name, stock_file_name):
+    """
+        The function reads stock data from json files and it will create tuple with two items:
+        average for each month and the date of the month.
+        It will then append the tuple for each month to a list.
+        It will also sort the list into display the best and worst 6 months.
+    :param stock_name: string of the stock name
+    :param stock_file_name: string of the json file which stores the stock information
+    :return:
+    """
     file_records = read_json_from_file(stock_file_name)
     dic_for_records = {}
     for x in file_records:
@@ -39,6 +48,16 @@ def read_stock_data(stock_name, stock_file_name):
 
 
 def insertitem(key,volume,close,dic):
+    """
+        The function will insert the items into dictionary.
+        The key is the month in the data.
+        The value is the tuple that contains two items: total sales of one month snd volume of sales per month.
+    :param key: The month in the data
+    :param volume: The volume of sales of one day for a stock
+    :param close: The close price for a stock at the end of the day
+    :param dic: The dictionary that stores all the parameters above in this function.
+    :return:
+    """
     list_1 = [volume*close,volume]
     dic.setdefault(key)
     dic[key] = [volume*close,volume]
@@ -50,10 +69,20 @@ def insertitem(key,volume,close,dic):
 
 
 def six_best_months(list):
+    """
+        This function is to identify the best siz months out of the monthly_averages list.
+    :param list: The monthly_averages list
+    :return: The last six items of the list
+    """
     return list[-6:]
 
 
 def six_worst_months(list):
+    """
+        This function is to identify the worst siz months out of the monthly_averages list.
+    :param list: The monthly_averages list
+    :return:
+    """
     return list[0:6]
 
 
