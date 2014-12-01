@@ -56,7 +56,7 @@ def insertitem(key,volume,close,dic):
     :param volume: The volume of sales of one day for a stock
     :param close: The close price for a stock at the end of the day
     :param dic: The dictionary that stores all the parameters above in this function.
-    :return:
+    :return: dictionary
     """
     list_1 = [volume*close,volume]
     dic.setdefault(key)
@@ -71,8 +71,10 @@ def insertitem(key,volume,close,dic):
 def six_best_months(list):
     """
         This function is to identify the best siz months out of the monthly_averages list.
+        The best six is the six highest values in the monthly_averages list.
+        The list is sorted from low values to high values.
     :param list: The monthly_averages list
-    :return: The last six items of the list
+    :return: The last six items on the list
     """
     return list[-6:]
 
@@ -80,13 +82,20 @@ def six_best_months(list):
 def six_worst_months(list):
     """
         This function is to identify the worst siz months out of the monthly_averages list.
+        The best six is the six highest values in the monthly_averages list.
+        The list is sorted from low values to high values.
     :param list: The monthly_averages list
-    :return:
+    :return: The first six items on the list
     """
     return list[0:6]
 
 
 def read_json_from_file(file_name):
+    """
+        This function reads json file(file_name)and converts it to a python readable format.
+    :param file_name: Name of the json file (file_name)
+    :return: The json file in python readable format
+    """
     with open(file_name) as file_handle:
         file_contents = file_handle.read()
 
