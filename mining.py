@@ -26,30 +26,31 @@ def read_stock_data(stock_name, stock_file_name):
         volume = x["Volume"]
         close = x["Close"]
         date = x["Date"]
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
-        key = str(getattr(date,"year"))+"/"+str(getattr(date,"month")) # The format of Year/Month in String
+        date = str(date)
+        key = date[:7]
         dic_for_records = insertitem(key,volume,close,dic_for_records)
     for k,v in dic_for_records.items():
         average_price = v[0]/v[1] #Sales is divided by Volume
         monthly_averages.append((k,average_price))
-    monthly_averages.sort(key=lambda tup: tup[1]) #Sort the list by average price
-    return six_worst_months(monthly_averages)
+        monthly_averages.sort(key=lambda tup: tup[1]) #Sort the list by average price
+    return six_best_months(monthly_averages)
 
 
 
 
 def insertitem(key,volume,close,dic):
     if key in dic:
-        dic[key] = (float(key[0])+cal_sales(volume,close),float(key[1])+volume)
+        dic[key] = [dic[key][0]+volume*close,dic[key][1]+volume]
+        if (key == "2007-12"):
+            print dic[key][0],dic[key][1],volume,close
         #if the date key is already in the dictionary, add the sales to the total sales and the volume to the total volume.
     else:
-        dic.setdefault(key,[]).append((cal_sales(volume,close),volume))
+        list_1 = [volume*close,volume]
+        dic.setdefault(key)
+        dic[key] = [volume*close,volume]
         #if the date key is not the in the dictionary, add the key to it as well as the value of the key.
     return dic
 
-def cal_sales(volume,close):
-    sales = volume * close
-    return sales;
 
 
 
