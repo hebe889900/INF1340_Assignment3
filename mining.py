@@ -39,16 +39,10 @@ def read_stock_data(stock_name, stock_file_name):
 
 
 def insertitem(key,volume,close,dic):
-    if key in dic:
-        dic[key] = [dic[key][0]+volume*close,dic[key][1]+volume]
-        if (key == "2007-12"):
-            print dic[key][0],dic[key][1],volume,close
-        #if the date key is already in the dictionary, add the sales to the total sales and the volume to the total volume.
-    else:
-        list_1 = [volume*close,volume]
-        dic.setdefault(key)
-        dic[key] = [volume*close,volume]
-        #if the date key is not the in the dictionary, add the key to it as well as the value of the key.
+    list_1 = [volume*close,volume]
+    dic.setdefault(key)
+    dic[key] = [volume*close,volume]
+    #if the date key is not the in the dictionary, add the key to it as well as the value of the key.
     return dic
 
 
