@@ -27,4 +27,5 @@ def test_insertitem():
     assert insertitem("2007/12",100,100,dic) == {"2007/12":(100,100)}
 
 test_goog()
+# AssertionError Occurs when testing the six_worst_months,  the tuple ('2004/08', 104.66) displayed in the test instead of ('2005/01', 192.96)
 test_insertitem()
