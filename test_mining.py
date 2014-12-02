@@ -22,7 +22,9 @@ def test_goog():
                                   ('2005/03', 181.18), ('2005/01', 192.96)]
 
 #Test if the function insertitem() inserts the item into dictionary properly.
-def insertitem():
+def test_insertitem():
     dic = {}
     assert insertitem("2007/12",100,100,dic) == {"2007/12":(100,100)}
 
+test_goog()
+test_insertitem()

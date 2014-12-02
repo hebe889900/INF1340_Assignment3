@@ -15,6 +15,7 @@ import json
 import datetime
 
 stock_data = []
+global monthly_averages
 monthly_averages = []
 
 
@@ -29,6 +30,8 @@ def read_stock_data(stock_name, stock_file_name):
     :param stock_file_name: string of the json file which stores the stock information
     :return:
     """
+    global monthly_averages
+    monthly_averages = []
     file_records = read_json_from_file(stock_file_name)
     dic_for_records = {}
     for x in file_records:
@@ -41,8 +44,8 @@ def read_stock_data(stock_name, stock_file_name):
         dic_for_records = insertitem(key,volume,close,dic_for_records)
     for k,v in dic_for_records.items():
         average_price = v[0]/v[1] #Sales is divided by Volume
-        monthly_averages.append((k,format(average_price, '.2f')))
-        monthly_averages.sort(key=lambda tup: tup[1]) #Sort the list by average price
+        monthly_averages.append((k,float(format(average_price, '.2f'))))
+        monthly_averages.sort(key=lambda tup: tup[1],reverse = True) #Sort the list by average price
     return
 
 
@@ -70,9 +73,7 @@ def insertitem(key,volume,close,dic):
 
 
 
-
-
-def six_best_months(list):
+def six_best_months():
     """
         This function is to identify the best siz months out of the monthly_averages list.
         The best six is the six highest values in the monthly_averages list.
@@ -80,10 +81,11 @@ def six_best_months(list):
     :param list: The monthly_averages list
     :return: The last six items on the list
     """
-    return list[-6:]
+    monthly_averages.sort(key=lambda tup: tup[1],reverse = True)
+    return monthly_averages[0:6]
 
 
-def six_worst_months(list):
+def six_worst_months():
     """
         This function is to identify the worst siz months out of the monthly_averages list.
         The best six is the six highest values in the monthly_averages list.
@@ -91,7 +93,8 @@ def six_worst_months(list):
     :param list: The monthly_averages list
     :return: The first six items on the list
     """
-    return list[0:6]
+    monthly_averages.sort(key=lambda tup: tup[1])
+    return monthly_averages[0:6]
 
 
 def read_json_from_file(file_name):
@@ -104,3 +107,5 @@ def read_json_from_file(file_name):
         file_contents = file_handle.read()
 
     return json.loads(file_contents)
+
+read_stock_data("GOOG", "data/GOOG.json")
